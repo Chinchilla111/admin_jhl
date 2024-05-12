@@ -1,5 +1,5 @@
 <template>
-    <el-menu :default-active="defaultActiveCode" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+    <el-menu background-color="#409EFF" text-color="#000" active-text-color="#fff" :default-active="defaultActiveCode" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
       <div v-for="item in menuData" :key="item.id">
         <el-menu-item :index="item.id" v-if="!item.children">
           <i :class="item.icon"></i>
