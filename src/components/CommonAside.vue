@@ -1,5 +1,6 @@
 <template>
-    <el-menu background-color="#409EFF" text-color="#000" active-text-color="#fff" :default-active="defaultActiveCode" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+    <el-menu background-color="#545c64" text-color="#fff" active-text-color="#ffd04b":default-active="defaultActiveCode" class="el-menu-vertical-demo" :collapse="isCollapse" @select="handleSelect">
+      <h3>{{ isCollapse ? '后台' : '通用后台管理系统' }}</h3>
       <div v-for="item in menuData" :key="item.id">
         <el-menu-item :index="item.id" v-if="!item.children">
           <i :class="item.icon"></i>
@@ -8,7 +9,7 @@
         <el-submenu :index="item.id" v-else>
           <template slot="title">
             <i :class="item.icon"></i>
-            <span>{{item.label}}</span>
+            <span v-show="!isCollapse">{{item.label}}</span>
           </template>
           <div v-for="item1 in item.children" :key="item1.id">
             <el-menu-item :index="item1.id" v-if="!item1.children">选项1</el-menu-item>
@@ -25,8 +26,7 @@
 export default {
   data() {
     return {
-      defaultActiveCode:'1234567890001001',
-      isCollapse: false,
+      defaultActiveCode:'1234567890',
       menuData:[
         {
           id:'1234567890',
@@ -35,36 +35,37 @@ export default {
           label:'首页',
           icon:'el-icon-s-custom',
           url:'home/home',
-          children:[
-            {
-              id:'1234567890001',
-              path:'/dadada',
-              name:'dadad',
-              label:'商品管理',
-              icon:'el-icon-menu',
-              url:'dadada/dadada',
-              children:[
-                {
-                  id:'1234567890001001',
-                  path:'/hahahah',
-                  name:'hahahah',
-                  label:'商品管理',
-                  icon:'el-icon-menu',
-                  url:'hahahah/hahahah',
-                }
-              ]
-            }
-          ]
         },
         {
           id:'2234567890',
-          path:'/lalalal1',
-          name:'lalalal1',
-          label:'lalalal1',
+          path:'/user',
+          name:'user',
+          label:'我的',
           icon:'el-icon-menu',
           url:'lalalal1/lalalal1',
+          children:[
+            {
+              id:'1234567890001',
+              path:'/user',
+              name:'user',
+              label:'用户管理',
+              icon:'el-icon-menu',
+              url:'dadada/dadada',
+              // children:[
+              //   {
+              //     id:'1234567890001001',
+              //     path:'/hahahah',
+              //     name:'hahahah',
+              //     label:'商品管理',
+              //     icon:'el-icon-menu',
+              //     url:'hahahah/hahahah',
+              //   }
+              // ]
+            }
+          ]
         }
-      ]
+      ],
+      pageRouter:'',
     };
   },
   computed:{
@@ -75,22 +76,50 @@ export default {
     // 有子组件的
     hasChildren(){
       return this.menuData.filter(item => item.children);
+    },
+    isCollapse(){
+      // console.log(,'看看这个值');
+      return this.$store.state.tap.isCollapse
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    handleSelect(e){
+      this.pageRouter = '';
+      this.dataTree(this.menuData,e);
+      if(this.$route.path === this.pageRouter && this.$route.path !== '/' && this.$route.path !== '/home' ){
+        this.$message.error('当前页面已是你您点击的页面请互重复点击！');
+      }else if((this.$route.path === '/' || this.$route.path === '/home') && (this.pageRouter === '/' || this.pageRouter === '/home')){
+        this.$message.error('当前页面已是你您点击的页面请互重复点击！');
+      }else{
+        this.$router.push(this.pageRouter);
+      }
+        
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+    dataTree(arr,key){
+      arr.forEach(item => {
+        if(item.id == key){
+          this.pageRouter = item.path;
+        }else if(item.children){
+          this.dataTree(item.children,key);
+        }
+      });
     }
-  }
+   }
 }
 </script>
 
-<style>
+<style lang="less" scope>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
+}
+.el-menu{
+  height: 100vh;
+  border: none;
+  h3{
+    color: #fff;
+    text-align: center;
+    line-height: 48px;
+  }
 }
 </style>
