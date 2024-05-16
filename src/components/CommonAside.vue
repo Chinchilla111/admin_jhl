@@ -120,6 +120,8 @@ export default {
     color: #fff;
     text-align: center;
     line-height: 48px;
+    white-space:nowrap;
+    overflow:hidden;
   }
 }
 </style>
