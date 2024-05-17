@@ -17,7 +17,8 @@ import ElementUI from 'element-ui';
 //   Main,
 // } from "element-ui";
 import router from "@/router";
-import store from "./store"
+import store from "./store";
+import './api/mock'
 /*
 *这是全局引入方法
 * 不建议使用，打包后的文件体积过大

@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import Home from '../views/home.vue';
 import User from '../views/user.vue';
 import Main from '../views/main.vue';
+import Order from '../views/order.vue';
+// import Login from '../views/userPages/login.vue';
 Vue.use(VueRouter);
 
 //1，创建路由组件
@@ -10,6 +12,10 @@ Vue.use(VueRouter);
 //3，创建router实例
 
 const routes = [
+    // {
+    //     path: '/login',
+    //     component: Login,
+    // },
     //主路由
     {
         path: '/',
@@ -18,6 +24,7 @@ const routes = [
         children:[
             {path: 'home', component: Home},
             {path: 'user', component: User},
+            {path: 'order', component: Order},
         ]
     },
 

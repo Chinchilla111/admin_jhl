@@ -36,6 +36,13 @@ export default {
 }
 </script>
 <style lang="less" scope>
+.el-container{
+  height: 100vh;
+}
+.el-aside{
+  height: 100vh;
+  background-color: #545c64;
+}
 .el-header{
   padding:0;
 }

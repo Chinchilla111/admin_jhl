@@ -12,7 +12,7 @@
             <span v-show="!isCollapse">{{item.label}}</span>
           </template>
           <div v-for="item1 in item.children" :key="item1.id">
-            <el-menu-item :index="item1.id" v-if="!item1.children">选项1</el-menu-item>
+            <el-menu-item :index="item1.id" v-if="!item1.children">{{ item1.label }}</el-menu-item>
             <el-submenu :index="item1.id" v-else>
               <template slot="title">{{item1.label}}</template>
               <el-menu-item v-for="item2 in item1.children" :key="item2.id" :index="item2.id">{{item2.label}}</el-menu-item>
@@ -63,9 +63,17 @@ export default {
               // ]
             }
           ]
-        }
+        },
+        {
+          id:'3234567890',
+          path:'/order',
+          name:'order',
+          label:'商品',
+          icon:'el-icon-s-custom',
+          url:'order/order',
+        },
       ],
-      pageRouter:'',
+      pageRouter:{},
     };
   },
   computed:{
@@ -84,21 +92,22 @@ export default {
   },
   methods: {
     handleSelect(e){
-      this.pageRouter = '';
+      this.pageRouter = {};
       this.dataTree(this.menuData,e);
-      if(this.$route.path === this.pageRouter && this.$route.path !== '/' && this.$route.path !== '/home' ){
+      if(this.$route.path === this.pageRouter.path && this.$route.path !== '/' && this.$route.path !== '/home' ){
         this.$message.error('当前页面已是你您点击的页面请互重复点击！');
-      }else if((this.$route.path === '/' || this.$route.path === '/home') && (this.pageRouter === '/' || this.pageRouter === '/home')){
+      }else if((this.$route.path === '/' || this.$route.path === '/home') && (this.pageRouter.path === '/' || this.pageRouter.path === '/home')){
         this.$message.error('当前页面已是你您点击的页面请互重复点击！');
       }else{
-        this.$router.push(this.pageRouter);
+        this.$router.push(this.pageRouter.path);
+        this.$store.commit('selectMenu',this.pageRouter)
       }
         
     },
     dataTree(arr,key){
       arr.forEach(item => {
         if(item.id == key){
-          this.pageRouter = item.path;
+          this.pageRouter = item;
         }else if(item.children){
           this.dataTree(item.children,key);
         }
@@ -111,10 +120,9 @@ export default {
 <style lang="less" scope>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
-  min-height: 400px;
+  max-height: 100vh;
 }
 .el-menu{
-  height: 100vh;
   border: none;
   h3{
     color: #fff;
