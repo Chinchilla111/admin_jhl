@@ -15,7 +15,9 @@
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item @click.native="personalCenter">个人中心</el-dropdown-item>
                     <el-dropdown-item @click.native="switchAccount">切换账号</el-dropdown-item>
-                    <el-dropdown-item @click.native="logOut">退出</el-dropdown-item>
+                    <el-dropdown-item @click.native="$throttle(logOut, {userName:'姜海龙'},1000,false)">退出</el-dropdown-item>
+<!--                  <button @click="" type="primary"><a-icon type="check-circle" />保存-->
+<!--                  </button>-->
                 </el-dropdown-menu>
                 </el-dropdown>
         </div>
@@ -47,7 +49,8 @@ export default {
     switchAccount(){
         console.log('切换账号');
     },
-    logOut(){
+    logOut(e){
+      console.log(e,'看看这个值执行了吗')
         this.$confirm('此操作将退出当前系统, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

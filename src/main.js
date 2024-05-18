@@ -18,7 +18,8 @@ import ElementUI from 'element-ui';
 // } from "element-ui";
 import router from "@/router";
 import store from "./store";
-import './api/mock'
+import './api/mock';
+import utils from '@/utils/instruction'
 /*
 *这是全局引入方法
 * 不建议使用，打包后的文件体积过大
@@ -42,6 +43,7 @@ Vue.config.productionTip = false;
 // Vue.use(MenuItemGroup);
 // Vue.use(Main);
 Vue.use(ElementUI);
+Vue.use(utils);
 
 new Vue({
   router,
