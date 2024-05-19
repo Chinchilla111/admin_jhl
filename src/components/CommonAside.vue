@@ -23,56 +23,57 @@
     </el-menu>
 </template>
 <script>
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
       defaultActiveCode:'1234567890',
-      menuData:[
-        {
-          id:'1234567890',
-          path:'/',
-          name:'home',
-          label:'首页',
-          icon:'el-icon-s-custom',
-          url:'home/home',
-        },
-        {
-          id:'2234567890',
-          path:'/user',
-          name:'user',
-          label:'我的',
-          icon:'el-icon-menu',
-          url:'lalalal1/lalalal1',
-          children:[
-            {
-              id:'1234567890001',
-              path:'/user',
-              name:'user',
-              label:'用户管理',
-              icon:'el-icon-menu',
-              url:'dadada/dadada',
-              // children:[
-              //   {
-              //     id:'1234567890001001',
-              //     path:'/hahahah',
-              //     name:'hahahah',
-              //     label:'商品管理',
-              //     icon:'el-icon-menu',
-              //     url:'hahahah/hahahah',
-              //   }
-              // ]
-            }
-          ]
-        },
-        {
-          id:'3234567890',
-          path:'/order',
-          name:'order',
-          label:'商品',
-          icon:'el-icon-s-custom',
-          url:'order/order',
-        },
-      ],
+      // menuData:[
+      //   {
+      //     id:'1234567890',
+      //     path:'/',
+      //     name:'home',
+      //     label:'首页',
+      //     icon:'el-icon-s-custom',
+      //     url:'home/home',
+      //   },
+      //   {
+      //     id:'2234567890',
+      //     path:'/user',
+      //     name:'user',
+      //     label:'我的',
+      //     icon:'el-icon-menu',
+      //     url:'lalalal1/lalalal1',
+      //     children:[
+      //       {
+      //         id:'1234567890001',
+      //         path:'/user',
+      //         name:'user',
+      //         label:'用户管理',
+      //         icon:'el-icon-menu',
+      //         url:'dadada/dadada',
+      //         // children:[
+      //         //   {
+      //         //     id:'1234567890001001',
+      //         //     path:'/hahahah',
+      //         //     name:'hahahah',
+      //         //     label:'商品管理',
+      //         //     icon:'el-icon-menu',
+      //         //     url:'hahahah/hahahah',
+      //         //   }
+      //         // ]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     id:'3234567890',
+      //     path:'/order',
+      //     name:'order',
+      //     label:'商品',
+      //     icon:'el-icon-s-custom',
+      //     url:'order/order',
+      //   },
+      // ],
       pageRouter:{},
     };
   },
@@ -87,7 +88,11 @@ export default {
     },
     isCollapse(){
       // console.log(,'看看这个值');
-      return this.$store.state.tap.isCollapse
+      return this.$store.state.tap.isCollapse;
+    },
+    menuData(){
+        return JSON.parse(Cookies.get('menu')) || this.$store.state.tap.menu;
+
     }
   },
   methods: {

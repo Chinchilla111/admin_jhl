@@ -1,6 +1,7 @@
 <template>
   <div>
     我是首页
+    <el-button @click="dadadad">111111</el-button>
   </div>
 </template>
 
@@ -22,7 +23,9 @@ export default {
     })
   },
   methods:{
-
+    dadadad(){
+      this.$store.commit('addMenu',this.$route);
+    }
   }
 }
 </script>
